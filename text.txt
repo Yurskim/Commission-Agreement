@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Door-to-Door Sales Commission Agreement</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background-color: #f4f4f4; color: #222; }
+    h1, h2 { text-align: center; }
+    h1 { font-size: 28px; margin-bottom: 15px; font-weight: bold; }
+    h2 { font-size: 18px; margin-top: 25px; padding-bottom: 5px; border-bottom: 2px solid #0073e6; }
+    p, li { font-size: 16px; }
+    ul { margin: 10px 0 10px 20px; }
+    input[type="text"], input[type="number"], textarea { width: 100%; padding: 10px; font-size: 16px; margin: 5px 0; box-sizing: border-box; border-radius: 5px; border: 1px solid #ccc; }
+    textarea { height: 80px; }
+    label { font-weight: bold; display: block; margin-top: 10px; }
+    .calculated { font-weight: bold; color: #0073e6; }
+    .section { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .signature { margin-top: 30px; }
+    .signature-line { display: block; height: 2px; width: 100%; background: #000; margin: 5px 0 15px 0; }
+    button { padding: 12px 20px; font-size: 16px; margin: 15px auto; display: block; cursor: pointer; border-radius: 5px; background-color: #0073e6; color: #fff; border: none; font-weight: bold; }
+    @media print {
+        button { display: none; }
+        input, textarea { border: none; }
+    }
+</style>
+<script>
+function updateTotals() {
+    let commission = parseFloat(document.getElementById('commission').value) || 0;
+    let recurring = parseFloat(document.getElementById('recurring').value) || 0;
+    let subscriptions = parseInt(document.getElementById('subscriptions').value) || 0;
+    let upfrontSales = parseInt(document.getElementById('upfrontSales').value) || 0;
+
+    let monthlyTotal = recurring * subscriptions;
+    let upfrontTotal = commission * upfrontSales;
+    let totalEarned = monthlyTotal + upfrontTotal;
+
+    document.getElementById('monthlyTotal').textContent = '$' + monthlyTotal.toFixed(2);
+    document.getElementById('upfrontTotal').textContent = '$' + upfrontTotal.toFixed(2);
+    document.getElementById('totalEarned').textContent = '$' + totalEarned.toFixed(2);
+}
+
+window.onload = function() {
+    let today = new Date();
+    let formatted = today.getFullYear()+'-'+(today.getMonth()+1).toString().padStart(2,'0')+'-'+today.getDate().toString().padStart(2,'0');
+    document.getElementById('currentDate').value = formatted;
+};
+
+function printAgreement() {
+    window.print();
+}
+</script>
+</head>
+<body>
+
+<h1>Door-to-Door Sales Commission Agreement</h1>
+<button onclick="printAgreement()">Print / Export PDF</button>
+
+<div class="section">
+<p><label>Date:</label> <input type="text" id="currentDate"></p>
+
+<h2>Parties</h2>
+<p><label>Seller:</label> <input type="text" placeholder="Your Name"> (Minor)</p>
+<p><label>Parent/Guardian:</label> <input type="text" placeholder="Parent/Guardian Name"></p>
+<p><label>Company:</label> <input type="text" placeholder="Company Name"></p>
+<p><label>Address:</label> <input type="text" placeholder="Company Address"></p>
+</div>
+
+<div class="section">
+<h2>1. Purpose</h2>
+<p>The Seller will perform door-to-door sales of <input type="text" placeholder="Product/Service"> on behalf of the Company.</p>
+</div>
+
+<div class="section">
+<h2>2. Services</h2>
+<ul>
+<li>The Seller will approach potential customers, explain the product/service, and assist in completing subscriptions or sales.</li>
+<li>The Seller agrees to follow all company rules, laws, and ethical sales practices.</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>3. Payment Terms</h2>
+<p><label>Commission per Sale ($):</label> <input type="number" id="commission" placeholder="Amount" oninput="updateTotals()"></p>
+<p><label>Number of Upfront Sales:</label> <input type="number" id="upfrontSales" placeholder="0" oninput="updateTotals()"></p>
+<p>Upfront Commission Total: <span class="calculated" id="upfrontTotal">$0.00</span></p>
+
+<p><label>Recurring Commission per Subscription ($):</label> <input type="number" id="recurring" placeholder="Amount" oninput="updateTotals()"></p>
+<p><label>Number of Active Subscriptions:</label> <input type="number" id="subscriptions" placeholder="0" oninput="updateTotals()"></p>
+<p>Monthly Recurring Commission Total: <span class="calculated" id="monthlyTotal">$0.00</span></p>
+
+<p>Total Potential Earnings (Upfront + Recurring): <span class="calculated" id="totalEarned">$0.00</span></p>
+<p><label>Payment Schedule:</label> <input type="text" placeholder="Weekly / Monthly"> via <input type="text" placeholder="Cash / Check / PayPal"></p>
+<p>Company agrees to maintain a record of all sales associated with the Seller.</p>
+</div>
+
+<div class="section">
+<h2>4. Duration and Termination</h2>
+<ul>
+<li>This agreement starts on <input type="text" placeholder="Start Date"> and continues until terminated by either party.</li>
+<li>Either party may terminate this agreement with <strong>7 days’ written notice</strong>.</li>
+<li>Commissions earned prior to termination must still be paid.</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>5. Responsibilities</h2>
+<ul>
+<li>Seller: Conduct sales professionally and ethically, report all sales accurately.</li>
+<li>Company: Track and verify sales, pay Seller commissions on time.</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>6. Legal Notes</h2>
+<ul>
+<li>Seller is a minor; parent/guardian cosigns for enforceability.</li>
+<li>Company acknowledges entering this agreement in good faith with a minor Seller.</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>7. Optional Notes</h2>
+<textarea placeholder="Add any extra terms or notes here..."></textarea>
+</div>
+
+<div class="section">
+<h2>8. Signatures</h2>
+<p><label>Seller:</label> <span class="signature-line"></span> <input type="text" placeholder="Name"> Date: <input type="text"></p>
+<p><label>Parent/Guardian:</label> <span class="signature-line"></span> <input type="text" placeholder="Name"> Date: <input type="text"></p>
+<p><label>Company Representative:</label> <span class="signature-line"></span> <input type="text" placeholder="Name"> Date: <input type="text"></p>
+</div>
+
+<div class="section">
+<h2>Instructions Before Printing</h2>
+<ul>
+<li>Fill in all fields directly in your phone browser.</li>
+<li>Bring a parent or guardian to sign if required.</li>
+<li>Click "Print / Export PDF" to save a professional PDF copy.</li>
+<li>Keep one copy for yourself and one for the company.</li>
+</ul>
+</div>
+
+</body>
+</html>
